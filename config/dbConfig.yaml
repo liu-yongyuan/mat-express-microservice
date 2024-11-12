@@ -1,0 +1,30 @@
+mysql:
+    development:
+        host: "localhost"
+        user: "root"
+        password: "my-secret-pw"
+        database: "online_store"
+        waitForConnections: true
+        connectionLimit: 10
+        connectTimeout: 100
+        queueLimit: 0
+
+    test:
+        host: "localhost"
+        user: "root"
+        password: "my-secret-pw"
+        database: "online_store"
+        waitForConnections: true
+        connectionLimit: 10
+        connectTimeout: 100
+        queueLimit: 0
+
+    production:
+        host: "prod-db-host"
+        user: "prod-user"
+        password: "prod-password"
+        database: "online_store"
+        waitForConnections: true
+        connectionLimit: 20
+        connectTimeout: 100
+        queueLimit: 0

@@ -1,0 +1,33 @@
+{
+  "name": "mat-express-microservice",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Example for microservice, sql in sqls/, docker in dockers/",
+  "private": "true",
+  "scripts": {
+    "test": "node --experimental-vm-modules node_modules/.bin/jest",
+    "start": "node server.js"
+  },
+  "keywords": [
+    "express",
+    "mysql",
+    "node.js"
+  ],
+  "author": "liu-yongyuan",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "dotenv": "^16.4.5",
+    "express": "^4.21.1",
+    "joi": "^17.13.3",
+    "js-yaml": "^4.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "mysql2": "^3.11.4",
+    "winston": "^3.16.0"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "jest-mock": "^29.7.0",
+    "supertest": "^7.0.0"
+  }
+}
