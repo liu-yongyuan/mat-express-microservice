@@ -12,8 +12,7 @@
             //"sourceMaps": true,
             "trace": true,
             "console": "integratedTerminal",
-            "internalConsoleOptions": "neverOpen",
-            "port": 9229
+            "internalConsoleOptions": "neverOpen"
         }
     ]
 }
