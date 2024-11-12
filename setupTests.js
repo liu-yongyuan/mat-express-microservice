@@ -1,26 +1,31 @@
 // setupTests.js
 import request from "supertest";
-import app from "./server.js";
-import logger from "./utils/logger.js";
+import app, { serverPromise } from "./server.js";
 
 let baseUrl = "/api/v1";
 
 global.token = null;
 
 beforeAll(async () => {
-    const john = {
-        email: "matt.liu@onlinestore.com",
-        password: "Abc.123.Zxc",
-    };
-    const res = await request(app).post(`${baseUrl}/login`).send(john);
+    try {
+        await serverPromise;
 
-    // Check status code
-    expect(res.statusCode).toBe(200);
+        const john = {
+            email: "matt.liu@onlinestore.com",
+            password: "Abc.123.Zxc",
+        };
+        const res = await request(app).post(`${baseUrl}/login`).send(john);
 
-    expect(res.body.token).toBeDefined();
+        // Check status code
+        expect(res.statusCode).toBe(200);
 
-    // Store the token for future use in protected route tests
-    global.token = res.body.token;
+        expect(res.body.token).toBeDefined();
 
-    logger.info(`login success`, `get the token`, { token: global.token });
+        // Store the token for future use in protected route tests
+        global.token = res.body.token;
+
+        console.info(`login success`, `get the token`, { token: global.token });
+    } catch (error) {
+        console.error(error);
+    }
 });

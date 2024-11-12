@@ -8,7 +8,6 @@ const JWT_SECRET = process.env.JWT_SECRET;
 
 export const login = async (req, res) => {
     try {
-        logger.info(`login in the body: ${JSON.stringify(req.body)}`);
         const errors = validate(req.body, schemas.userLogin);
         if (errors) {
             return res.status(400).json({ errors }); // Send validation errors as response

@@ -13,6 +13,14 @@ dotenv.config();
 
 let app = express();
 
+// server init success resolve
+let serverPromiseResolve = null;
+// server init success promise
+// await serverPromise; // => your express next
+const serverPromise = new Promise((resolve, rejection) => {
+    serverPromiseResolve = resolve;
+});
+
 async function initializeExpressServer() {
     console.log(`[app] NODE_ENV:${process.env.NODE_ENV}`);
 
@@ -62,6 +70,8 @@ async function effect() {
 
     // Define route
     app.use(AuthRoutes);
+
+    serverPromiseResolve();
 }
 
 effect().catch((error) => {
@@ -82,5 +92,7 @@ process.on("unhandledRejection", (reason, promise) => {
     // Optionally, log the rejection or send alerts
     // Do not call process.exit() to prevent the process from exiting
 });
+
+export { serverPromise };
 
 export default app;
