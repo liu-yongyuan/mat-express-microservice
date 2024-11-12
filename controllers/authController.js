@@ -1,8 +1,8 @@
 import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
-import { getByEmail, insert } from "../models/customersModel.js";
-import logger from "../utils/logger.js";
+import { getCustomerByEmail, insertCustomer } from "../models/customerModel.js";
 import { schemas, validate } from "../utils/validator.js";
+import logger from "../utils/logger.js";
 
 const JWT_SECRET = process.env.JWT_SECRET;
 
@@ -19,19 +19,16 @@ export const login = async (req, res) => {
         }
 
         const { email, password } = req.body;
-        const user = await getByEmail(email);
+        const user = await getCustomerByEmail(email);
         if (!user) {
             return res.status(404).json({ message: "User not found" });
         }
 
         // Compare the password with the hashed password stored in the database
-        /* const isPasswordValid = await bcrypt.compare(password, user.password);
+        const isPasswordValid = await bcrypt.compare(password, user.password);
          if (!isPasswordValid) {
              return res.status(401).json({ message: 'Invalid password' });
-         } */
-        if (!Object.is(password, user.password)) {
-            return res.status(401).json({ message: "Invalid password" });
-        }
+         }
 
         const token = jwt.sign(
             { customer_id: user.customer_id, email: user.email, is_admin: user.is_admin },
@@ -54,8 +51,8 @@ export const registration = async (req, res) => {
             return res.status(400).json({ errors });
         }
 
-        const { email, password } = req.body();
-        const existingUser = await getByEmail(email);
+        const { email, password } = req.body;
+        const existingUser = await getCustomerByEmail(email);
         if (existingUser) {
             return res.status(400).json({ message: "Email already in use" });
         }
@@ -65,7 +62,7 @@ export const registration = async (req, res) => {
         const customerData = Object.assign(req.body, {
             password: hashedPassword,
         });
-        const customerId = await insert(customerData);
+        const customerId = await insertCustomer(customerData);
         res.status(201).json({
             message: "User registered successfully",
             customerId,

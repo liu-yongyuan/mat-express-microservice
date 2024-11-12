@@ -1,21 +1,18 @@
 // setupTests.js
 import request from "supertest";
 import app from "./server.js";
-import { serverConfig } from "./app.js";
 import logger from "./utils/logger.js";
 
-let { baseUrl } = serverConfig;
+let baseUrl = "/api/v1";
 
 global.token = null;
 
 beforeAll(async () => {
     const john = {
-        email: "john.doe@example.com",
-        password: "password123",
+        email: "matt.liu@onlinestore.com",
+        password: "Abc.123.Zxc",
     };
     const res = await request(app).post(`${baseUrl}/login`).send(john);
-
-    console.log(res.body);
 
     // Check status code
     expect(res.statusCode).toBe(200);
