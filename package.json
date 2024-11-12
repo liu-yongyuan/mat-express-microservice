@@ -23,6 +23,7 @@
     "js-yaml": "^4.1.0",
     "jsonwebtoken": "^9.0.2",
     "mysql2": "^3.11.4",
+    "redis": "^4.7.0",
     "winston": "^3.16.0"
   },
   "devDependencies": {

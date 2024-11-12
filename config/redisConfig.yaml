@@ -1,0 +1,18 @@
+redis:
+    development:
+        host: "localhost"
+        port: 6379
+        password: "" # Add password if Redis is secured
+        db: 0 # Database index, can be 0-15 in Redis
+
+    test:
+        host: "localhost"
+        port: 6379
+        password: ""
+        db: 1
+
+    production:
+        host: "redis.production.server" # Change to production Redis server address
+        port: 6379
+        password: "your-production-password"
+        db: 0

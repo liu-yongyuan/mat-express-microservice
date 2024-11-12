@@ -1,8 +1,11 @@
+import { initializeRedisClient } from "./redisPool.js";
 import { app } from "./app.js";
 import logger from "./utils/logger.js";
 import requestLogger from "./middleware/requestLogger.js";
 import productsRoute from "./routes/productsRoutes.js";
 import authRoutes from "./routes/authRoutes.js";
+
+initializeRedisClient();
 
 app.use(requestLogger);
 

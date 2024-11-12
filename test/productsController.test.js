@@ -2,6 +2,7 @@
 import request from "supertest";
 import app from "../server.js";
 import { serverConfig } from "../app.js";
+import logger from "../utils/logger.js";
 
 let { baseUrl } = serverConfig;
 
@@ -11,6 +12,8 @@ describe(`GET ${baseUrl}/productes`, () => {
 
         // Check status code
         expect(res.statusCode).toBe(200);
+
+        logger.info('fetch all products',res.body)
 
         // Check response body structure
         expect(Array.isArray(res.body)).toBe(true);
