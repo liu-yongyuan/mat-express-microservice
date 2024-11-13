@@ -1,7 +1,10 @@
+import dotenv from "dotenv";
+// Load environment variables from .env file before another
+await dotenv.config();
+
 import fs from "fs";
 import yaml from "js-yaml";
 import express from "express";
-import dotenv from "dotenv";
 import errorHandler from "./utils/errorHandler.js";
 import requestLogger from "./middleware/requestLogger.js";
 import logger from "./utils/logger.js";
@@ -9,8 +12,7 @@ import { initializeRedisClient } from "./redisClient.js";
 import { initializeMysqlPool } from "./mysqlPool.js";
 import AuthRoutes from "./routes/authRoutes.js";
 
-// Load environment variables from .env file
-dotenv.config();
+
 
 let app = express();
 

@@ -3,10 +3,19 @@ import dotenv from "dotenv";
 
 // Load environment variables from .env file
 dotenv.config();
+
 // Configure log4js
 log4js.configure({
     appenders: {
-        file: { type: "file", filename: "logs/app.log" },
+        file: {
+            type: "file",
+            filename: "logs/app", // Base filename
+            maxLogSize: 100 * 1024 * 1024, // Max file size: 100MB
+            backups: 3, // Keep 3 backup logs
+            compress: true, // Compress rotated files
+            pattern: "yyyy-MM-dd.log", // Date-based pattern
+            alwaysIncludePattern: true, // Ensure the date pattern is always included
+        },
         console: { type: "stdout" },
     },
     categories: {
