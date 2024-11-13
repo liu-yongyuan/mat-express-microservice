@@ -1,8 +1,4 @@
 import log4js from "log4js";
-import dotenv from "dotenv";
-
-// Load environment variables from .env file
-dotenv.config();
 
 // Configure log4js
 log4js.configure({

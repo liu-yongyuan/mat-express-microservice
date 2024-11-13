@@ -1,6 +1,5 @@
-import dotenv from "dotenv";
-// Load environment variables from .env file before another
-await dotenv.config();
+// 利用 module 依次下载 js 的特性，首个加载环境配置文件，确保其他文件不会缺失环境变量
+import "./dotenvConfig.js";
 
 import fs from "fs";
 import yaml from "js-yaml";
@@ -11,8 +10,6 @@ import logger from "./utils/logger.js";
 import { initializeRedisClient } from "./redisClient.js";
 import { initializeMysqlPool } from "./mysqlPool.js";
 import AuthRoutes from "./routes/authRoutes.js";
-
-
 
 let app = express();
 
