@@ -10,6 +10,7 @@ import logger from "./utils/logger.js";
 import { initializeRedisClient } from "./redisClient.js";
 import { initializeMysqlPool } from "./mysqlPool.js";
 import AuthRoutes from "./routes/authRoutes.js";
+import ProductRoutes from "./routes/productRoutes.js";
 
 let app = express();
 
@@ -68,9 +69,9 @@ async function effect() {
     // Add the request handler middleware before all routes
     app.use(requestLogger);
 
-    // Define route
-    // await initAuthRoutes();
+    // define routes
     app.use(AuthRoutes);
+    app.use(ProductRoutes);
 
     serverPromiseResolve();
 
