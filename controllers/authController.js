@@ -25,9 +25,9 @@ export const login = async (req, res) => {
 
         // Compare the password with the hashed password stored in the database
         const isPasswordValid = await bcrypt.compare(password, user.password);
-         if (!isPasswordValid) {
-             return res.status(401).json({ message: 'Invalid password' });
-         }
+        if (!isPasswordValid) {
+            return res.status(401).json({ message: "Invalid password" });
+        }
 
         const token = jwt.sign(
             { customer_id: user.customer_id, email: user.email, is_admin: user.is_admin },

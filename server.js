@@ -4,6 +4,7 @@ import express from "express";
 import dotenv from "dotenv";
 import errorHandler from "./utils/errorHandler.js";
 import requestLogger from "./middleware/requestLogger.js";
+import logger from "./utils/logger.js";
 import { initializeRedisClient } from "./redisClient.js";
 import { initializeMysqlPool } from "./mysqlPool.js";
 import AuthRoutes from "./routes/authRoutes.js";
@@ -69,9 +70,12 @@ async function effect() {
     app.use(requestLogger);
 
     // Define route
+    // await initAuthRoutes();
     app.use(AuthRoutes);
 
     serverPromiseResolve();
+
+    logger.info("[server.js][init success]");
 }
 
 effect().catch((error) => {
