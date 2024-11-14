@@ -20,7 +20,7 @@ mysql:
         queueLimit: 0
 
     production:
-        host: "localhost"
+        host: "mysql-container"
         user: "root"
         password: "my-secret-pw"
         database: "online_store"
