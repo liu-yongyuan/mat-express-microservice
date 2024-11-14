@@ -1,4 +1,4 @@
-import { notProductOwnership } from "../models/productOwnershipModel";
+import { notProductOwnership } from "../models/productOwnershipModel.js";
 
 const productOwnershipCheckMiddleware = (req, res, next) => {
     const { id } = req.params;

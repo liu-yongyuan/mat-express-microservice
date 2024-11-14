@@ -21,6 +21,12 @@ cd mat-express-microservice
 npm install
 ```
 
+```bash
+# running with docker
+# ./docker-compose.yml
+docker-compose up -d
+```
+
 ## Usage
 
 before execute sqls/*.sql
@@ -30,6 +36,7 @@ To start the development environment with Node.js and Redis, run the following c
 ```bash
 npm start
 ```
+
 
 This will start the necessary services (MySQL, Redis, and Express) for the project.
 
