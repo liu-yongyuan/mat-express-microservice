@@ -9,7 +9,7 @@ Dockerfile
 .dockerignore
 
 # Ignore logs
-*.log
+logs/
 
 # Ignore IDE config files
 .vscode/
@@ -18,3 +18,4 @@ Dockerfile
 # Ignore build artifacts
 dist/
 build/
+
