@@ -19,7 +19,7 @@ services:
       - "6379:6379"
 
   express:
-    image: mat-express-microservice
+    image: liuyychn/mat-express-microservice
     container_name: myexpress-container
     networks:
       - my_network
