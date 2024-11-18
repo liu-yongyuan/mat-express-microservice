@@ -1,4 +1,12 @@
-import { listAll, getById, addProduct, updateProductById, deleteProduct } from "../services/productService.js";
+import {
+    listAll,
+    getById,
+    addProduct,
+    updateProductById,
+    deleteProduct,
+    searchByKeywords,
+    buildIndexToElasticSearch,
+} from "../services/productService.js";
 import { schemas, validate } from "../utils/validator.js";
 import logger from "../utils/logger.js";
 
@@ -63,5 +71,26 @@ export const deleteProductById = async (req, res) => {
     } catch (e) {
         console.error(e);
         res.status(500).json({ error: "Database query failed" });
+    }
+};
+
+export const search = async (req, res) => {
+    try {
+        const { query } = req.query;
+        const data = await searchByKeywords(query);
+        res.json(data);
+    } catch (error) {
+        logger.error(error);
+        res.status(500).json({ error: "query failed" });
+    }
+};
+
+export const rebuildIndex = async (req, res) => {
+    try {
+        await buildIndexToElasticSearch();
+        res.json({ message: "push success" });
+    } catch (error) {
+        logger.error(error);
+        res.status(500).json({ error: "query failed" });
     }
 };

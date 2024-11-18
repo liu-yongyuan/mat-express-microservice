@@ -1,8 +1,20 @@
-import { elasticsearchClient } from "../elasticsearchClient.cjs";
+import { elasticsearchClient } from "../elasticsearchClient.js";
 
 const elasticsearchIndex = {
     productTable: "product",
 };
+
+async function elasticCreateIndex(index) {
+    return elasticsearchClient.indices.create({ index });
+}
+
+async function elasticCheckIndex(index) {
+    return elasticsearchClient.indices.exists({ index });
+}
+
+async function elasticDeleteIndex(index) {
+    return elasticsearchClient.indices.delete({ index });
+}
 
 async function indexElasticsearch(index, id, data) {
     await elasticsearchClient.index({
@@ -17,15 +29,23 @@ async function refreshElasticsearch(index) {
 }
 
 async function searchElasticsearch(index, query) {
-    const { body } = await elasticsearchClient.search({
+    const result = await elasticsearchClient.search({
         index,
         body: {
             query: {
-                match: { name: query },
+                match: query,
             },
         },
     });
-    return body.hits.hits.map((hit) => hit._source);
+    return result?.hits?.hits?.map((hit) => hit._source);
 }
 
-export { elasticsearchIndex, refreshElasticsearch, indexElasticsearch, searchElasticsearch };
+export {
+    elasticsearchIndex,
+    refreshElasticsearch,
+    indexElasticsearch,
+    searchElasticsearch,
+    elasticCheckIndex,
+    elasticCreateIndex,
+    elasticDeleteIndex,
+};

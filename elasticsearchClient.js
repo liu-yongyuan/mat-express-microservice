@@ -1,9 +1,16 @@
-const fs = require("fs");
-const yaml = require("js-yaml");
+import fs from "fs";
+import yaml from "js-yaml";
+
+/*
+Use the createRequire Function
+Since @elastic/elasticsearch is a CommonJS package, you can use Node.js's 
+built-in module.createRequire to import it in an ES Module project:
+ */
+import { createRequire } from "module";
+const require = createRequire(import.meta.url);
 const { Client } = require("@elastic/elasticsearch");
 
 let elasticsearchClient = null;
-
 async function initializeElasticsearch() {
     // Load the Elasticsearch configuration from the YAML file
     const config = yaml.load(fs.readFileSync("./config/elasticsearchConfig.yaml", "utf8"));
@@ -19,9 +26,10 @@ async function initializeElasticsearch() {
             username: envConfig.username, // Your username
             password: envConfig.password, // Your password
         },
+        requestTimeout: 100
     });
 
     return elasticsearchClient;
 }
 
-module.exports = { initializeElasticsearch, elasticsearchClient };
+export { elasticsearchClient, initializeElasticsearch };

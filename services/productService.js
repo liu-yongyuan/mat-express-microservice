@@ -1,8 +1,51 @@
+import {
+    searchElasticsearch,
+    elasticsearchIndex,
+    elasticCheckIndex,
+    indexElasticsearch,
+    elasticCreateIndex,
+    elasticDeleteIndex,
+} from "../utils/elasticsearchHelper.js";
 import { cacheData, getCachedData, delCachedData, cachedKey } from "../utils/redisHelper.js";
 import { deleteProducOwnership, insertProductOwnership } from "../models/productOwnershipModel.js";
-import { deleteProductById, getProductById, insertProduct, updateProduct, listAllProduct } from "../models/productModel.js";
+import {
+    deleteProductById,
+    getProductById,
+    insertProduct,
+    updateProduct,
+    listAllProduct,
+} from "../models/productModel.js";
 
-async function searchByKeywords(keywords) {}
+async function buildIndexToElasticSearch() {
+    const listDatas = await listAll();
+    if (!listDatas) {
+        return;
+    }
+    const indexReady = await elasticCheckIndex(elasticsearchIndex.productTable);
+    if (indexReady) {
+        await elasticDeleteIndex(elasticsearchIndex.productTable);
+    }
+    // create
+    await elasticCreateIndex(elasticsearchIndex.productTable);
+    listDatas.forEach((item) => {
+        indexElasticsearch(elasticsearchIndex.productTable, item.id, item);
+    });
+}
+
+async function searchByKeywords(keywords) {
+    if (!keywords) {
+        return [];
+    }
+    const indexReady = await elasticCheckIndex(elasticsearchIndex.productTable);
+    if (!indexReady) {
+        return [];
+    }
+    const searchProperty = {
+        name: keywords,
+    };
+    const searchResponse = await searchElasticsearch(elasticsearchIndex.productTable, searchProperty);
+    return searchResponse ?? [];
+}
 
 async function listAll() {
     const listDatas = await getCachedData(cachedKey.listAllProducts);
@@ -68,4 +111,4 @@ async function deleteProduct(productId, customerId) {
     delCachedData(cachedKey.listAllProducts);
 }
 
-export { listAll, getById, addProduct, updateProductById, deleteProduct };
+export { listAll, getById, addProduct, updateProductById, deleteProduct, searchByKeywords, buildIndexToElasticSearch };

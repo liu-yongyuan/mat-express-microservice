@@ -1,6 +1,14 @@
 import express from "express";
 import authMiddleware from "../middleware/authMiddleware.js";
-import { listAllProduct, getProductById, insert, updateProduct, deleteProductById } from "../controllers/productController.js";
+import {
+    listAllProduct,
+    getProductById,
+    insert,
+    updateProduct,
+    deleteProductById,
+    search,
+    rebuildIndex,
+} from "../controllers/productController.js";
 import { productOwnershipCheckMiddleware } from "../middleware/productMiddleware.js";
 
 const router = express.Router();
@@ -13,6 +21,9 @@ router.get(`${baseUrl}/product`, listAllProduct);
 // Route to get a single product by ID
 router.get(`${baseUrl}/product/:id`, getProductById);
 
+// search by keywords
+router.get(`${baseUrl}/products`, search);
+
 // Route to insert an product
 router.post(`${baseUrl}/product`, authMiddleware, insert);
 
@@ -21,5 +32,7 @@ router.put(`${baseUrl}/product/:id`, authMiddleware, productOwnershipCheckMiddle
 
 // Route to delete a product
 router.delete(`${baseUrl}/product/:id`, authMiddleware, productOwnershipCheckMiddleware, deleteProductById);
+
+router.post(`${baseUrl}/post/rebuildIndex`, rebuildIndex);
 
 export default router;
