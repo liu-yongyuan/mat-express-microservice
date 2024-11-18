@@ -9,6 +9,7 @@ import requestLogger from "./middleware/requestLogger.js";
 import logger from "./utils/logger.js";
 import { initializeRedisClient } from "./redisClient.js";
 import { initializeMysqlPool } from "./mysqlPool.js";
+import { initializeElasticsearch, elasticsearchClient } from "./elasticsearchClient.cjs";
 import AuthRoutes from "./routes/authRoutes.js";
 import ProductRoutes from "./routes/productRoutes.js";
 
@@ -60,6 +61,8 @@ async function effect() {
     await initializeRedisClient();
 
     await initializeMysqlPool();
+
+    await initializeElasticsearch();
 
     await initializeExpressServer();
 

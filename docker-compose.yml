@@ -17,6 +17,14 @@ services:
       - my_network
     ports:
       - "6379:6379"
+  
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.10.0
+    container_name: elasticsearch-container
+    networks:
+      - my_network
+    ports:
+      - "9200:9200"
 
   express:
     image: liuyychn/mat-express-microservice
@@ -24,10 +32,11 @@ services:
     networks:
       - my_network
     ports:
-      - "9000:8080" # Assuming your Express app runs on port 3000
+      - "9000:8080" # Assuming your Express app runs on port 9000
     depends_on:
       - mysql
       - redis
+      - elasticsearch
 
 networks:
   my_network:
