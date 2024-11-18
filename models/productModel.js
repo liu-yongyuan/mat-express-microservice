@@ -12,11 +12,11 @@ export const listAllProduct = async () => {
     }
 };
 
-export const getProductById = async (id) => {
+export const getProductById = async (productId) => {
     try {
         const [rows] = await mysqlPool.query(
             "select * from product where product_id = ?",
-            id,
+            productId,
         );
         return rows?.[0] ?? null;
     } catch (e) {
@@ -38,12 +38,12 @@ export const insertProduct = async (product) => {
 };
 
 export const updateProduct = async (product) => {
-    const { id, name, description, price, stock_quantity, category_id } =
+    const { product_id, name, description, price, stock_quantity, category_id } =
         product;
     try {
         const [result] = await mysqlPool.query(
             "UPDATE product SET name = ?, description = ?, price = ?, stock_quantity = ?, category_id = ? WHERE product_id = ?",
-            [name, description, price, stock_quantity, category_id, id],
+            [name, description, price, stock_quantity, category_id, product_id],
         );
         return result.affectedRows;
     } catch (e) {
@@ -51,11 +51,11 @@ export const updateProduct = async (product) => {
     }
 };
 
-export const deleteProductById = async (id) => {
+export const deleteProductById = async (productId) => {
     try {
         const [result] = await mysqlPool.query(
             "DELETE FROM product WHERE product_id = ?",
-            [id],
+            [productId],
         );
         return result.affectedRows;
     } catch (err) {

@@ -1,13 +1,9 @@
 import { mysqlPool } from "../mysqlPool.js";
 
 export const countProductOwnership = async (productId, customerId) => {
-    try {
-        const [rows] = await mysqlPool.query("SELECT COUNT(*) AS count FROM product_ownership WHERE product_id = ? AND customer_id = ?", [productId, customerId]);
-        const { count } = rows[0];
-        return count;
-    } catch (e) {
-        return e;
-    }
+    const [rows] = await mysqlPool.query("SELECT COUNT(*) AS count FROM product_ownership WHERE product_id = ? AND customer_id = ?", [productId, customerId]);
+    const { count } = rows[0];
+    return count;
 };
 
 export const isProductOwnership = async (productId, customerId) => {

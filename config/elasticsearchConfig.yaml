@@ -1,0 +1,15 @@
+elasticsearch:
+    development:
+        node: "http://localhost:9200"
+        username: ""
+        password: ""
+
+    test:
+        node: "http://localhost:9200"
+        username: ""
+        password: ""
+
+    production:
+        node: "http://elasticsearch-container:9200"
+        username: ""
+        password: ""

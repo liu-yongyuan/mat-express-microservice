@@ -13,6 +13,13 @@
             "trace": true,
             "console": "integratedTerminal",
             "internalConsoleOptions": "neverOpen"
+        },
+        {
+            "name": "Debug Express Server",
+            "type": "node",
+            "request": "launch",
+            "program": "${workspaceFolder}/server.js",
+            "cwd": "${workspaceFolder}",
         }
     ]
 }

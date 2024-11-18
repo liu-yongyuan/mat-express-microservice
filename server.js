@@ -9,6 +9,7 @@ import requestLogger from "./middleware/requestLogger.js";
 import logger from "./utils/logger.js";
 import { initializeRedisClient } from "./redisClient.js";
 import { initializeMysqlPool } from "./mysqlPool.js";
+import { initializeElasticsearch } from "./elasticsearchClient.js";
 import AuthRoutes from "./routes/authRoutes.js";
 import ProductRoutes from "./routes/productRoutes.js";
 
@@ -18,7 +19,7 @@ let app = express();
 let serverPromiseResolve = null;
 // server init success promise
 // await serverPromise; // => your express next
-const serverPromise = new Promise((resolve, rejection) => {
+const serverPromise = new Promise((resolve) => {
     serverPromiseResolve = resolve;
 });
 
@@ -61,6 +62,9 @@ async function effect() {
 
     await initializeMysqlPool();
 
+    await initializeElasticsearch();
+    // logger.info(`elasticsearchClient not null`, elasticsearchClient !== null);
+
     await initializeExpressServer();
 
     // Add the error handler middleware after all routes
@@ -92,7 +96,7 @@ process.on("uncaughtException", (err) => {
 
 // Handle unhandled promise rejections
 process.on("unhandledRejection", (reason, promise) => {
-    logger.error("Unhandled Rejection: ", err);
+    logger.error("Unhandled Rejection: ", reason, promise);
     // Optionally, log the rejection or send alerts
     // Do not call process.exit() to prevent the process from exiting
 });
